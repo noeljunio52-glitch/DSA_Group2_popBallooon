@@ -1,0 +1,109 @@
+/* Bubble Pop Challenge styles (plain CSS, no libraries) */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 24px 16px;
+  min-height: 100vh;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  color: #e8ecf8;
+  background: #2e3650;
+}
+
+.game-card {
+  max-width: 420px;
+  margin: 0 auto;
+  background: #3a4466;
+  border-radius: 16px;
+  padding: 20px 16px 24px;
+  box-shadow: 0 6px 24px rgba(10, 14, 35, 0.45);
+}
+
+h1 { margin: 0 0 4px; font-size: 1.6rem; text-align: center; color: #8ec5ff; }
+.subtitle { margin: 0 0 16px; text-align: center; font-size: 0.85rem; color: #b8c0d9; }
+
+/* ---------- Score and lives ---------- */
+.stats { display: grid; gap: 8px; margin-bottom: 8px; text-align: center; }
+.stats-2 { grid-template-columns: repeat(2, 1fr); }
+.stat-box { background: #2f3856; border-radius: 10px; padding: 6px 4px; }
+.stat-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.04em; color: #aab3cf; }
+.stat-value { font-size: 1.5rem; font-weight: 700; line-height: 1.2; color: #f1f4ff; }
+.lives { color: #ff6b78; letter-spacing: 3px; }
+
+/* ---------- Message box ---------- */
+.message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.6rem;
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  border: 1px solid;
+  border-radius: 8px;
+  text-align: center;
+}
+.message.info    { background: #2b4573; border-color: #4a73b3; color: #d4e5ff; }
+.message.success { background: #245443; border-color: #38896a; color: #d2f5e3; }
+.message.warning { background: #5f4f22; border-color: #94793a; color: #ffeeb8; }
+.message.danger  { background: #63303a; border-color: #98495a; color: #ffd9de; }
+
+/* ---------- The bounded game area (its width/height are set from game.js) ---------- */
+.area {
+  box-sizing: content-box;       /* so the width/height set in JS is the usable play space */
+  position: relative;
+  overflow: hidden;              /* bubbles can never leave the area */
+  margin: 0 auto;
+  background: linear-gradient(#4b6fa6, #2f4b7e);
+  border: 3px solid #6fb0ff;
+  border-radius: 12px;
+}
+.area.hit { border-color: #ff6b78; }          /* flashes when a bubble bursts */
+.area.over .bubble { pointer-events: none; opacity: 0.5; }
+
+.bubble {
+  position: absolute;
+  padding: 0;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  background-color: #cfe8ff;
+  background-size: cover;               /* the face picture fills the round bubble */
+  background-position: center;
+  box-shadow: 0 0 0 2px rgba(29, 123, 214, 0.55), inset -4px -6px 12px rgba(29, 123, 214, 0.35);
+  cursor: pointer;
+  touch-action: manipulation;
+}
+/* small shiny spot so it still looks like a bubble */
+.bubble::after {
+  content: "";
+  position: absolute;
+  top: 12%;
+  left: 18%;
+  width: 22%;
+  height: 12%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: rotate(-30deg);
+  pointer-events: none;
+}
+.bubble:focus-visible { outline: 3px solid #212529; }
+
+/* Bubbles close to bursting get a red ring as a warning */
+.bubble.danger {
+  border-color: #fff;
+  box-shadow: 0 0 0 4px #e63946, 0 0 10px 4px rgba(230, 57, 70, 0.6);
+}
+
+/* ---------- Buttons ---------- */
+.buttons { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.btn {
+  padding: 9px 22px;
+  font: inherit;
+  color: #fff;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn-primary { background: #1d7bd6; }
+.btn:hover { filter: brightness(0.92); }
+.btn:focus-visible { outline: 3px solid #212529; outline-offset: 2px; }
